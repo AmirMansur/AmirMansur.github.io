@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Login – Daily News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="login-page">
 
-<header>🔐 Login</header>
+<div class="login-card">
+  <h2>🔐 Member Login</h2>
+  <p class="sub-text">Only approved members can access</p>
 
-<div class="container">
-  <input id="user" placeholder="Username"><br><br>
-  <input id="pass" type="password" placeholder="Password"><br><br>
+  <input id="user" type="text" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
 
-  <button class="btn" onclick="login()">Login</button>
+  <button onclick="login()">Login</button>
+
   <p id="msg"></p>
 </div>
 

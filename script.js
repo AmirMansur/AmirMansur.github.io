@@ -21,7 +21,7 @@ function login() {
     sessionStorage.setItem("loggedIn", "yes");
     sessionStorage.setItem("loginTime", Date.now());
 
-    window.location.href = "secret.html";
+    window.location.href = "./secret.html";
   } else {
     msg.innerText = "Wrong username or password";
   }

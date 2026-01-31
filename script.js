@@ -2,7 +2,7 @@
 const allowedUsers = {
   "admin": "0000",
   "user1": "1234",
-  "1": "1"          // NEW ACCOUNT
+  "1": "1"
 };
 
 let inactivityTimer;
@@ -30,36 +30,30 @@ function login() {
 // ===== PROTECT SECRET PAGE =====
 function protect() {
   if (sessionStorage.getItem("loggedIn") !== "yes") {
-    logout();
+    window.location.href = "login.html";
     return;
   }
 
-  // Disable back button
+  // Block back button
   history.pushState(null, null, location.href);
-  window.onpopstate = function () {
-    history.pushState(null, null, location.href);
-  };
+  window.onpopstate = () => history.pushState(null, null, location.href);
 
   startSessionTimer();
-  resetInactivityTimer();
 
-  // Detect user interaction
-  ["mousemove", "keydown", "scroll", "touchstart"].forEach(event => {
-    document.addEventListener(event, resetInactivityTimer);
-  });
+  // IMPORTANT: delay inactivity start
+  setTimeout(startInactivityTracking, 1000);
 }
 
-// ===== SESSION TIMER (30 seconds) =====
+// ===== SESSION TIMER (30s) =====
 function startSessionTimer() {
   const timerBox = document.getElementById("timer");
 
   sessionTimer = setInterval(() => {
-    const loginTime = sessionStorage.getItem("loginTime");
-    const now = Date.now();
-    const remaining = SESSION_LIMIT - (now - loginTime);
+    const loginTime = Number(sessionStorage.getItem("loginTime"));
+    const remaining = SESSION_LIMIT - (Date.now() - loginTime);
 
     if (remaining <= 0) {
-      alert("Session expired (30 seconds).");
+      alert("Session expired.");
       logout();
     } else if (timerBox) {
       timerBox.innerText =
@@ -68,11 +62,19 @@ function startSessionTimer() {
   }, 1000);
 }
 
-// ===== INACTIVITY TIMER (5 seconds) =====
+// ===== INACTIVITY TRACKING (5s) =====
+function startInactivityTracking() {
+  resetInactivityTimer();
+
+  ["mousemove", "keydown", "scroll", "touchstart"].forEach(event => {
+    document.addEventListener(event, resetInactivityTimer);
+  });
+}
+
 function resetInactivityTimer() {
   clearTimeout(inactivityTimer);
   inactivityTimer = setTimeout(() => {
-    alert("Logged out due to inactivity (5 seconds).");
+    alert("Logged out due to inactivity.");
     logout();
   }, INACTIVITY_LIMIT);
 }

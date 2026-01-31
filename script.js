@@ -1,36 +1,83 @@
-// Allowed users (demo)
+// ===== ALLOWED USERS =====
 const allowedUsers = {
+  "admin": "0000",
   "user1": "1234",
-  "1":  "1",
-  "admin": "0000"
+  "1": "1"          // NEW ACCOUNT
 };
 
-// LOGIN FUNCTION
+let inactivityTimer;
+let sessionTimer;
+const SESSION_LIMIT = 30000;   // 30 seconds
+const INACTIVITY_LIMIT = 5000; // 5 seconds
+
+// ===== LOGIN =====
 function login() {
   const u = document.getElementById("user").value;
   const p = document.getElementById("pass").value;
   const msg = document.getElementById("msg");
 
   if (allowedUsers[u] === p) {
-    // ONE-TIME SESSION (not permanent)
     sessionStorage.setItem("loggedIn", "yes");
+    sessionStorage.setItem("loginTime", Date.now());
 
-    // Go to protected area
     window.location.href = "dashboard.html";
   } else {
     msg.innerText = "Wrong username or password";
   }
 }
 
-// PROTECT FUNCTION (for secret/dashboard page)
+// ===== PROTECT PAGE =====
 function protect() {
   if (sessionStorage.getItem("loggedIn") !== "yes") {
-    window.location.href = "login.html";
+    logout();
+    return;
   }
+
+  // Disable back button
+  history.pushState(null, null, location.href);
+  window.onpopstate = function () {
+    history.pushState(null, null, location.href);
+  };
+
+  startSessionTimer();
+  resetInactivityTimer();
+
+  // Detect user interaction
+  ["mousemove", "keydown", "scroll", "touchstart"].forEach(event => {
+    document.addEventListener(event, resetInactivityTimer);
+  });
 }
 
-// LOGOUT FUNCTION
+// ===== SESSION TIMER (30s) =====
+function startSessionTimer() {
+  const timerBox = document.getElementById("timer");
+  sessionTimer = setInterval(() => {
+    const loginTime = sessionStorage.getItem("loginTime");
+    const now = Date.now();
+    const left = SESSION_LIMIT - (now - loginTime);
+
+    if (left <= 0) {
+      alert("Session expired (30 seconds).");
+      logout();
+    } else if (timerBox) {
+      timerBox.innerText = "Session expires in: " + Math.ceil(left / 1000) + "s";
+    }
+  }, 1000);
+}
+
+// ===== INACTIVITY TIMER (5s) =====
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    alert("Logged out due to inactivity (5 seconds).");
+    logout();
+  }, INACTIVITY_LIMIT);
+}
+
+// ===== LOGOUT =====
 function logout() {
   sessionStorage.clear();
+  clearTimeout(inactivityTimer);
+  clearInterval(sessionTimer);
   window.location.href = "login.html";
-}
+  }

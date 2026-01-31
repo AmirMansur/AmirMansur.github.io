@@ -1,28 +1,35 @@
+// Allowed users (demo)
 const allowedUsers = {
-  "amir": "1234",
+  "user1": "1234",
   "admin": "0000"
 };
 
+// LOGIN FUNCTION
 function login() {
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
-  let msg = document.getElementById("msg");
+  const u = document.getElementById("user").value;
+  const p = document.getElementById("pass").value;
+  const msg = document.getElementById("msg");
 
   if (allowedUsers[u] === p) {
-    localStorage.setItem("loggedIn", "yes");
-    location.href = "secret.html";
+    // ONE-TIME SESSION (not permanent)
+    sessionStorage.setItem("loggedIn", "yes");
+
+    // Go to protected area
+    window.location.href = "dashboard.html";
   } else {
     msg.innerText = "Wrong username or password";
   }
 }
 
+// PROTECT FUNCTION (for secret/dashboard page)
 function protect() {
-  if (localStorage.getItem("loggedIn") !== "yes") {
-    location.href = "index.html";
+  if (sessionStorage.getItem("loggedIn") !== "yes") {
+    window.location.href = "login.html";
   }
 }
 
+// LOGOUT FUNCTION
 function logout() {
-  localStorage.removeItem("loggedIn");
-  location.href = "index.html";
+  sessionStorage.clear();
+  window.location.href = "login.html";
 }

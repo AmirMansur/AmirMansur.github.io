@@ -1,6 +1,7 @@
 // Allowed users (demo)
 const allowedUsers = {
   "user1": "1234",
+  "1":  "1",
   "admin": "0000"
 };
 

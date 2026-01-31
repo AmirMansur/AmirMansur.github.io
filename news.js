@@ -1,20 +1,23 @@
+const mainBox = document.getElementById("main-news");
+const listBox = document.getElementById("news-list");
+
+mainBox.innerHTML = "<p>Loading top news...</p>";
+
 fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en")
   .then(res => res.json())
   .then(data => {
 
     // MAIN NEWS
     const main = data.items[0];
-    document.getElementById("main-news").innerHTML = `
+    mainBox.innerHTML = `
       <img src="${main.thumbnail || 'https://via.placeholder.com/400'}">
       <div class="title">${main.title}</div>
     `;
 
     // OTHER NEWS
-    const list = document.getElementById("news-list");
-    list.innerHTML = "";
-
+    listBox.innerHTML = "";
     data.items.slice(1, 7).forEach(item => {
-      list.innerHTML += `
+      listBox.innerHTML += `
         <div class="news-item">
           <img src="${item.thumbnail || 'https://via.placeholder.com/90'}">
           <a href="${item.link}" target="_blank">${item.title}</a>
@@ -24,5 +27,5 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?
 
   })
   .catch(() => {
-    document.getElementById("main-news").innerText = "Failed to load news";
+    mainBox.innerHTML = "<p>⚠️ News loading failed. Refresh page.</p>";
   });

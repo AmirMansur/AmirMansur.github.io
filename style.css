@@ -35,3 +35,42 @@ header {
 .btn:hover {
   background: #00a5d8;
 }
+
+
+
+
+
+
+
+
+
+.flex {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.news-box, .login-box {
+  background: rgba(0,0,0,0.35);
+  padding: 15px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.news-box ul {
+  padding-left: 20px;
+}
+
+.news-box li {
+  margin-bottom: 10px;
+}
+
+.news-box a {
+  color: #00eaff;
+  text-decoration: none;
+}
+
+.news-box a:hover {
+  text-decoration: underline;
+}

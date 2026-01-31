@@ -14,24 +14,18 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 18px;
-  margin-left: 8px;
-}
-
 .login-btn {
-  text-decoration: none;
   color: red;
+  text-decoration: none;
   font-weight: bold;
 }
 
 /* MAIN NEWS */
 .main-news {
-  position: relative;
   margin: 12px;
   border-radius: 14px;
   overflow: hidden;
+  position: relative;
 }
 
 .main-news img {
@@ -43,9 +37,9 @@ body {
 .main-news .title {
   position: absolute;
   bottom: 0;
+  padding: 12px;
   background: linear-gradient(transparent, rgba(0,0,0,0.8));
   color: white;
-  padding: 12px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -66,13 +60,11 @@ body {
 .news-item img {
   width: 90px;
   height: 65px;
-  object-fit: cover;
   border-radius: 8px;
+  object-fit: cover;
 }
 
-.news-item a {
-  text-decoration: none;
-  color: black;
+.news-item p {
+  margin: 0;
   font-weight: bold;
-  font-size: 14px;
 }

@@ -2,20 +2,26 @@
 <html>
 <head>
   <title>Amir News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <div class="title">📰 Daily News</div>
+  <div class="left">
+    ☰ <span class="logo">AMIR NEWS</span>
+  </div>
   <a class="login-btn" href="login.html">Login</a>
 </div>
 
-<!-- NEWS SECTION -->
-<div class="news-container" id="news">
-  <p>Loading news...</p>
+<!-- MAIN NEWS -->
+<div id="main-news" class="main-news">
+  <p>Loading...</p>
 </div>
+
+<!-- OTHER NEWS -->
+<div id="news-list" class="news-list"></div>
 
 <script src="news.js"></script>
 </body>

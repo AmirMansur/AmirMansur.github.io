@@ -21,6 +21,7 @@ function login() {
     sessionStorage.setItem("loggedIn", "yes");
     sessionStorage.setItem("loginTime", Date.now());
 
+    // ONLY secret.html
     window.location.href = "./secret.html";
   } else {
     msg.innerText = "Wrong username or password";
@@ -40,7 +41,7 @@ function protect() {
 
   startSessionTimer();
 
-  // IMPORTANT: delay inactivity start
+  // Delay inactivity detection
   setTimeout(startInactivityTracking, 1000);
 }
 
@@ -62,7 +63,7 @@ function startSessionTimer() {
   }, 1000);
 }
 
-// ===== INACTIVITY TRACKING (5s) =====
+// ===== INACTIVITY (5s) =====
 function startInactivityTracking() {
   resetInactivityTimer();
 
